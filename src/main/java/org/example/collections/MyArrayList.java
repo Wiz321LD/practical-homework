@@ -33,6 +33,12 @@ public class MyArrayList<E> implements Collection<E> {
 
     //==================================== Methods ===========================================
 
+    /**
+     * This method add one element to this collection.
+     *
+     * @param e element The element that needed to add.
+     * @return True if addition was successfully.
+     */
     @Override
     public boolean add(E e) {
         checkRangeOfArraySize();
@@ -41,7 +47,13 @@ public class MyArrayList<E> implements Collection<E> {
         return true;
     }
 
-    //TODO:???
+    /**
+     * This method add element to this collection by the index.
+     *
+     * @param index The index of this collection.
+     * @param element The element that needed to add.
+     * @return True if addition was successfully.
+     */
     public boolean add(int index, E element){
         checkRangeOfIndex(index);
         checkRangeOfArraySize();
@@ -66,22 +78,12 @@ public class MyArrayList<E> implements Collection<E> {
         return this.elementArray = Arrays.copyOf(this.elementArray, newCapacity + 1);
     }
 
-    //TODO:???
-//    public boolean addAll(Collection<? extends E> collection){
-//        Object[] collectionArray = collection.toArray();
-//        if (collectionArray.length > 0){
-//            int lastOccupiedIndex = this.elementArray.length;
-//            if (collectionArray.length > (this.elementArray).length - (this.size)){
-//                ensureArrayCapacity(this.elementArray.length + collectionArray.length + 1);
-//                mergeCollections(collectionArray, lastOccupiedIndex);
-//                this.size = this.elementArray.length - 1;
-//            }
-//            System.arraycopy(this.elementArray, 0, this.elementArray, this.size, this.size);
-//            this.size = this.elementArray.length - 1;
-//        }
-//        return true;
-//    }
-
+    /**
+     * This method adds all elements from collection to its own elementArray.
+     *
+     * @param collection Collection containing elements to be added to this collection
+     * @return True if addition was successfully.
+     */
     public boolean addAll(Collection<? extends E> collection){
         Object[] collectionArray = collection.toArray();
         int s1 = this.size, s2 = collection.size();
@@ -106,7 +108,9 @@ public class MyArrayList<E> implements Collection<E> {
         }
     }
 
-    //TODO:???
+    /**
+     * This method clears all elements of this collection.
+     */
     public void clear(){
         if (this.size > 0){
             for (int i = 0; i < this.size; i++){
@@ -116,14 +120,28 @@ public class MyArrayList<E> implements Collection<E> {
         }
     }
 
-    //TODO:???
+    /**
+     * This method returns an element from this collection by its index.
+     *
+     * @param index The index where the element lies.
+     * @return E its element which returns by the index.
+     */
     @SuppressWarnings("unchecked")
     public E get(int index){return (E)this.elementArray[index];}
 
-    //TODO:???
+    /**
+     * This method checks size of created collection.
+     *
+     * @return If there are no elements than it returns true.
+     */
     public boolean isEmpty(){return this.size == 0;}
 
-    //TODO:???
+    /**
+     * This method remove one element from this collection by the index.
+     *
+     * @param index The index where the element lies.
+     * @return True if removing was successfully.
+     */
     public boolean remove(int index){
         if (this.size > 0){
             checkRangeOfIndex(index);
@@ -157,7 +175,12 @@ public class MyArrayList<E> implements Collection<E> {
         }
     }
 
-    //TODO:???
+    /**
+     * This method remove one element from this collection.
+     *
+     * @param object Element to be removed from this collection, if present
+     * @return True if removing was successfully.
+     */
     public boolean remove(Object object){
         if (this.size > 0 && object != null){
             for (int i = 0; i < this.size; i++){
@@ -172,7 +195,11 @@ public class MyArrayList<E> implements Collection<E> {
         return true;
     }
 
-    //***//
+    /**
+     * Sort collection by Merge sort.
+     *
+     * @param comparator Comparator that specifies how to sort this collection.
+     */
     @SuppressWarnings("unchecked")
     public void sort(Comparator<? super E> comparator){
         mergeSort((E[]) this.elementArray, comparator);
@@ -244,6 +271,11 @@ public class MyArrayList<E> implements Collection<E> {
 
     }
 
+    /**
+     * This method return size of this collection.
+     *
+     * @return size The size of the collection (the number of elements it contains).
+     */
     public int size(){return this.size;}
 
     @Override
@@ -252,6 +284,18 @@ public class MyArrayList<E> implements Collection<E> {
                 "elementArray=" + Arrays.toString(elementArray) +
                 '}';
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T[] toArray(T[] array) {
+        return (T[]) Arrays.copyOf(this.elementArray, this.size, array.getClass());
+    }
+
+    @Override
+    public Object[] toArray() {
+        return Arrays.copyOf(this.elementArray, this.size);
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////
 
@@ -265,19 +309,6 @@ public class MyArrayList<E> implements Collection<E> {
     @Override
     public Iterator<E> iterator() {
         return null;
-    }
-
-    //TODO: ???
-    @Override
-    public Object[] toArray() {
-        return Arrays.copyOf(this.elementArray, this.size);
-    }
-
-    //TODO: ???
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T[] toArray(T[] array) {
-        return (T[]) Arrays.copyOf(this.elementArray, this.size, array.getClass());
     }
 
     //TODO: LATER
