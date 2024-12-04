@@ -29,4 +29,11 @@ public class UniversityGroup {
 
     public Set<Student> getStudents() {return this.students;}
 
+    @Override
+    public String toString() {
+        return "UniversityGroup{" +
+                "number=" + number +
+                '}';
+    }
+
 }

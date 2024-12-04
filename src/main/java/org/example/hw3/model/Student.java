@@ -64,4 +64,15 @@ public class Student {
         this.universityGroup = universityGroup;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", universityGroup=" + universityGroup +
+                '}';
+    }
+
 }
