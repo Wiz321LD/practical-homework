@@ -9,20 +9,31 @@
 
 <body>
 
-<h1>Get one Student from DB by ID</h1>
+    <h1>Get one Student from DB by ID</h1>
 
-<br/>
+    <br/>
 
-<p>
     <%
         Student student = (Student) request.getSession().getAttribute("student");
     %>
-    Id: <%=student.getStudentId()%>
-    Name: <%=student.getName()%>
-    Surname: <%=student.getSurname()%>
-    Birth date: <%=student.getBirthDate()%>
-    Group number: <%=student.getUniversityGroup().getNumber()%>
-</p>
+
+    <h3>
+        Id: <%=student.getStudentId()%>
+    </h3>
+    <h3>
+        Name: <%=student.getName()%>
+    </h3>
+    <h3>
+        Surname: <%=student.getSurname()%>
+    </h3>
+    <h3>
+        Birthdate: <%=student.getBirthDate()%>
+    </h3>
+    <h3>
+        Group number: <%=student.getUniversityGroup().getNumber()%>
+    </h3>
+
+
 
 </body>
 
