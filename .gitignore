@@ -34,3 +34,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+# Properties Files #
+postgresqlData.properties
