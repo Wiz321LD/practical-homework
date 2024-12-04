@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>Start page</title>
+    <title>Select page</title>
 </head>
 
 <body>

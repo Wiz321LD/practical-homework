@@ -1,6 +1,7 @@
 package org.example.hw3.servlet;
 
 import org.example.hw3.model.Student;
+import org.example.hw3.model.UniversityGroup;
 import org.example.hw3.service.StudentService;
 
 import javax.servlet.ServletException;
@@ -10,9 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-@WebServlet("/start")
-public class StartServlet extends HttpServlet {
+@WebServlet("/select")
+public class SelectServlet extends HttpServlet {
 
     private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
 
@@ -29,7 +34,8 @@ public class StartServlet extends HttpServlet {
         req.setAttribute("student", student);
         session.setAttribute("student", student);
 
-        req.getRequestDispatcher("/WEB-INF/start.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/select.jsp").forward(req, resp);
+
     }
 
 }
