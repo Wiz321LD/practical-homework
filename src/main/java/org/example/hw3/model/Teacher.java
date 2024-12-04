@@ -64,4 +64,15 @@ public class Teacher {
         this.students = students;
     }
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teacherId=" + teacherId +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", students=" + students.toString() +
+                '}';
+    }
+
 }

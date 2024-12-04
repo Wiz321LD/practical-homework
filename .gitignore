@@ -37,3 +37,6 @@ buildNumber.properties
 
 # Properties Files #
 postgresqlData.properties
+
+# Meta info #
+META-INF

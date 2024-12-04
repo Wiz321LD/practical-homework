@@ -22,6 +22,7 @@ public class InsertServlet extends HttpServlet {
     private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
 
 
+    //Type: /insert?name=...&surname=...&date=yyyy-MM-dd&number=...
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -54,7 +55,6 @@ public class InsertServlet extends HttpServlet {
 
     }
 
-    //?name=Jhon&surname=Lock&date=1958-05-24&number=5
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
