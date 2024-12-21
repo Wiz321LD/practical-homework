@@ -1,13 +1,31 @@
-package org.example.hw3.model;
+package org.example.hw4.model;
+
+import jakarta.persistence.*;
+import org.hibernate.annotations.Generated;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "student")
 public class Student {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Generated
+    @Column(name = "student_id")
     private int studentId;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "birth_date")
     private Date birthDate;
+
+    @ManyToOne
+    @JoinColumn(name = "group_number_fk")
     private UniversityGroup universityGroup;
 
 

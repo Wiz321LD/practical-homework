@@ -1,7 +1,7 @@
-package org.example.hw3.service;
+package org.example.hw4.service;
 
-import org.example.hw3.dao.StudentDAO;
-import org.example.hw3.model.Student;
+import org.example.hw4.dao.StudentDAO;
+import org.example.hw4.model.Student;
 
 import java.util.List;
 

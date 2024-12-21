@@ -1,7 +1,7 @@
-package org.example.hw3.servlet;
+package org.example.hw4.servlet;
 
-import org.example.hw3.model.Student;
-import org.example.hw3.service.StudentService;
+import org.example.hw4.model.Student;
+import org.example.hw4.service.StudentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,4 +1,4 @@
-package org.example.hw3.util;
+package org.example.hw4.util;
 
 import java.io.IOException;
 import java.io.InputStream;

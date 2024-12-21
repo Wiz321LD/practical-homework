@@ -1,3 +1,5 @@
 db.connection_url=
 db.username=
 db.password=
+db.driver_class=
+db.hibernate_dialect=

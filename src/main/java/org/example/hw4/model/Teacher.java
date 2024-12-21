@@ -1,4 +1,4 @@
-package org.example.hw3.model;
+package org.example.hw4.model;
 
 import java.util.Date;
 import java.util.HashSet;

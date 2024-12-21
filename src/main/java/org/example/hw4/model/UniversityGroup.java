@@ -1,17 +1,27 @@
-package org.example.hw3.model;
+package org.example.hw4.model;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "university_group")
 public class UniversityGroup {
 
+    @Id
+    @Column(name = "number")
     private int number;
-    private Set<Student> students = new HashSet<Student>();
+
+    @OneToMany(mappedBy = "universityGroup")
+    private List<Student> students = new ArrayList<>();
 
 
     public UniversityGroup(){}
 
-    public UniversityGroup(int number, Set<Student> students) {
+    public UniversityGroup(int number, List<Student> students) {
         this.number = number;
         this.students = students;
     }
@@ -21,13 +31,13 @@ public class UniversityGroup {
         this.number = number;
     }
 
-    public void setStudents(Set<Student> students) {this.students = students;}
+    public void setStudents(List<Student> students) {this.students = students;}
 
     public int getNumber() {
         return this.number;
     }
 
-    public Set<Student> getStudents() {return this.students;}
+    public List<Student> getStudents() {return this.students;}
 
     @Override
     public String toString() {
