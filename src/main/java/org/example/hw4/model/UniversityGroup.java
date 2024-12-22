@@ -1,6 +1,7 @@
 package org.example.hw4.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,8 +16,9 @@ public class UniversityGroup {
     @Column(name = "number")
     private int number;
 
-    @OneToMany(mappedBy = "universityGroup")
-    private List<Student> students = new ArrayList<>();
+    @OneToMany(mappedBy = "universityGroup", fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    private List<Student> students;
 
 
     public UniversityGroup(){}
@@ -39,10 +41,20 @@ public class UniversityGroup {
 
     public List<Student> getStudents() {return this.students;}
 
+    public void addStudent(Student student) {
+        if (this.students == null) {
+            this.students = new ArrayList<>();
+        }
+        this.students.add(student);
+        student.setUniversityGroup(this);
+    }
+
     @Override
     public String toString() {
         return "UniversityGroup{" +
                 "number=" + number +
+                ", students=" + students.stream().
+                    map((x) -> x.getName() + " " + x.getSurname()).toList() +
                 '}';
     }
 

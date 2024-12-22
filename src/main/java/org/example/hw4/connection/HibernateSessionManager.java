@@ -15,21 +15,12 @@ public class HibernateSessionManager {
 
 
     static{
-        loadDriver();
         loadConfiguration();
     }
 
 
     private HibernateSessionManager() {}
 
-
-    private static void loadDriver(){
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private static void loadConfiguration() {
         configuration.setProperty("hibernate.connection.username", PropertiesUtil.getProperty(USERNAME));

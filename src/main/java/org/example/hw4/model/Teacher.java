@@ -1,22 +1,38 @@
 package org.example.hw4.model;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Generated;
 
+import java.util.*;
+
+@Entity
+@Table(name = "teacher")
 public class Teacher {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Generated
+    @Column(name = "teacher_id")
     private int teacherId;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "birth_date")
     private Date birthDate;
-    private Set<Student> students = new HashSet<Student>();
+
+    @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    private List<Student> students;
 
 
     public Teacher(){}
 
-    public Teacher(int teacherId, String name, String surname, Date birthDate, Set<Student> students) {
-        this.teacherId = teacherId;
+    public Teacher(String name, String surname, Date birthDate, List<Student> students) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
@@ -40,7 +56,7 @@ public class Teacher {
         return birthDate;
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
@@ -60,8 +76,19 @@ public class Teacher {
         this.birthDate = birthDate;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public void addStudent(Student student) {
+        if (students == null){
+            students = new ArrayList<>();
+        }
+        students.add(student);
+        if (student.getTeachers() == null){
+            student.setTeachers(new ArrayList<>());
+        }
+        student.getTeachers().add(this);
     }
 
     @Override
@@ -71,7 +98,8 @@ public class Teacher {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", birthDate=" + birthDate +
-                ", students=" + students.toString() +
+                ", students=" + students.stream().
+                    map((x) -> x.getName() + " " + x.getSurname()).toList() +
                 '}';
     }
 

@@ -1,9 +1,12 @@
 package org.example.hw4.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -24,19 +27,27 @@ public class Student {
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_number_fk")
     private UniversityGroup universityGroup;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_teacher",
+            joinColumns = @JoinColumn(name = "student_id_fk"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id_fk"))
+    @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    private List<Teacher> teachers;
 
 
     public Student(){}
 
-    public Student(int studentId, String name, String surname, Date birthDate, UniversityGroup universityGroup) {
-        this.studentId = studentId;
+    public Student(String name, String surname, Date birthDate, UniversityGroup universityGroup, List<Teacher> teachers) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
         this.universityGroup = universityGroup;
+        this.teachers = teachers;
     }
 
 
@@ -60,6 +71,10 @@ public class Student {
         return universityGroup;
     }
 
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
     public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
@@ -80,6 +95,21 @@ public class Student {
         this.universityGroup = universityGroup;
     }
 
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    public void addTeacher(Teacher teacher){
+        if (teachers == null){
+            teachers = new ArrayList<>();
+        }
+        teachers.add(teacher);
+        if (teacher.getStudents() == null){
+            teacher.setStudents(new ArrayList<>());
+        }
+        teacher.getStudents().add(this);
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -87,7 +117,9 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", birthDate=" + birthDate +
-                ", universityGroup=" + universityGroup +
+                ", universityGroup=" + universityGroup.getNumber() +
+                ", teachers=" + teachers.stream().
+                    map((x) -> x.getName() + " " + x.getSurname()).toList() +
                 '}';
     }
 

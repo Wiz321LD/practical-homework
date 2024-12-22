@@ -11,17 +11,20 @@
     <property name="hibernate.connection.autocommit">false</property>
 
 
-<!--    <property name="hibernate.connection.username"></property>-->
-<!--    <property name="hibernate.connection.password"></property>-->
-<!--    <property name="hibernate.connection.url"></property>-->
-<!--    <property name="hibernate.connection.driver_class"></property>-->
-<!--    <property name="hibernate.dialect"></property>-->
+    <!-- Added by org/example/hw4/util/PropertiesUtil.java in HibernateSessionManager -->
+<!--    <property name="hibernate.connection.username"></property>  -->
+<!--    <property name="hibernate.connection.password"></property>  -->
+<!--    <property name="hibernate.connection.url"></property> -->
+<!--    <property name="hibernate.connection.driver_class"></property>  -->
+<!--    <property name="hibernate.dialect"></property>  -->
 
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 
+    <!-- Entity mapping -->
     <mapping class="org.example.hw4.model.Student"/>
+    <mapping class="org.example.hw4.model.Teacher"/>
     <mapping class="org.example.hw4.model.UniversityGroup"/>
 
   </session-factory>
