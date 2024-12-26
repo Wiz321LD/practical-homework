@@ -1,6 +1,5 @@
 package org.example.hw4.servlet;
 
-import org.example.hw4.model.Student;
 import org.example.hw4.service.StudentService;
 
 import javax.servlet.ServletException;
@@ -8,13 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/select")
 public class SelectServlet extends HttpServlet {
 
-    private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
+    private static final StudentService STUDENT_SERVICE = StudentService.getStudentService();
 
 
     @Override

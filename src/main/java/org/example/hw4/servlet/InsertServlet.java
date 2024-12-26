@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +18,7 @@ import java.util.Date;
 @WebServlet("/insert")
 public class InsertServlet extends HttpServlet {
 
-    private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
+    private static final StudentService STUDENT_SERVICE = StudentService.getStudentService();
 
 
     //Type: /insert?name=...&surname=...&date=yyyy-MM-dd&number=...
