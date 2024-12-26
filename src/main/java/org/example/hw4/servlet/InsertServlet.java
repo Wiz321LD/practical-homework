@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,15 +58,15 @@ public class InsertServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        HttpSession session = req.getSession();
-//
-//        Student student = (Student) session.getAttribute("student");
-//
-//        STUDENT_SERVICE.createOneNewStudent(student);
-//
-//        try(PrintWriter outWriter = resp.getWriter()){
-//            outWriter.println("OK");
-//        }
+        HttpSession session = req.getSession();
+
+        Student student = (Student) session.getAttribute("student");
+
+        STUDENT_SERVICE.create(student);
+
+        try(PrintWriter outWriter = resp.getWriter()){
+            outWriter.println("OK");
+        }
 
     }
 

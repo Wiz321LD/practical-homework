@@ -79,4 +79,19 @@ public class StudentDAO implements SimpleDAO<Integer, Student>{
             session.getTransaction().commit();
         }
     }
+
+    public Student findStudentAndTeachers(Integer studentId){
+        Student student = new Student();
+        try (Session session = SESSION_FACTORY.openSession()) {
+            session.beginTransaction();
+
+            student = session.get(Student.class, studentId);
+            System.out.println(student.getUniversityGroup());
+            System.out.println(student.getTeachers());
+
+            session.getTransaction().commit();
+        }
+        return student;
+    }
+
 }
