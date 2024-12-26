@@ -5,6 +5,8 @@ import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentDAOTest {
@@ -22,6 +24,14 @@ class StudentDAOTest {
     public void testLazyInitialization() {
         Student student = STUDENT_DAO.findById(3).get();
         assertThrows(LazyInitializationException.class, () -> System.out.println(student.getTeachers()));
+    }
+
+    @Test
+    public void solvedProblems(){
+        Student student = STUDENT_DAO.findById(3).get();
+        List<Student> students = STUDENT_DAO.findAll();
+        assertDoesNotThrow(() -> System.out.println(student.getTeachers()));
+        assertDoesNotThrow(() -> System.out.println(students));
     }
 
 }

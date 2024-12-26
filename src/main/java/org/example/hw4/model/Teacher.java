@@ -8,6 +8,18 @@ import java.util.*;
 
 @Entity
 @Table(name = "teacher")
+@NamedEntityGraph(
+        name = "graphOfStudents",
+        attributeNodes = {
+                @NamedAttributeNode(value = "students", subgraph = "students-subgraph")
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "students-subgraph", attributeNodes = {
+                        @NamedAttributeNode(value = "universityGroup"),
+                        @NamedAttributeNode(value = "teachers")
+                })
+        }
+)
 public class Teacher {
 
     @Id

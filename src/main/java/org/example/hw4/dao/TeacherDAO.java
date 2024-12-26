@@ -6,6 +6,7 @@ import org.example.hw4.model.Teacher;
 import org.example.hw4.model.UniversityGroup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.graph.RootGraph;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +42,14 @@ public class TeacherDAO implements SimpleDAO<Integer, Teacher>{
         Optional<Teacher> teacherOptional = Optional.empty();
         try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
-            teacherOptional = Optional.ofNullable(session.get(Teacher.class, id));
+
+            RootGraph<?> entityGraph = session.getEntityGraph("graphOfUniversityGroupAndTeachers");
+
+            Map<String, Object> graphProperties = new HashMap<>();
+            graphProperties.put("jakarta.persistence.fetchgraph", entityGraph);
+
+            teacherOptional = Optional.ofNullable(session.find(Teacher.class, id, graphProperties));
+
             session.getTransaction().commit();
         }
         return teacherOptional;
@@ -52,7 +60,12 @@ public class TeacherDAO implements SimpleDAO<Integer, Teacher>{
         List<Teacher> teacherList = new ArrayList<>();
         try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
-            teacherList = session.createQuery("FROM Teacher", Teacher.class).getResultList();
+
+            teacherList = session.createQuery("FROM Teacher", Teacher.class)
+                    .setHint("jakarta.persistence.fetchgraph", session.getEntityGraph("graphOfUniversityGroupAndTeachers"))
+                    .getResultList();
+
+            session.getTransaction().commit();
         }
         return teacherList;
     }

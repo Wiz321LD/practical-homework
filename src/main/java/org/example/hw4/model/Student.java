@@ -10,6 +10,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
+@NamedEntityGraph(
+        name = "graphOfUniversityGroupAndTeachers",
+        attributeNodes = {
+                @NamedAttributeNode(value = "universityGroup", subgraph = "universityGroup-subgraph"),
+                @NamedAttributeNode(value = "teachers", subgraph = "teachers-subgraph")
+        },
+        subgraphs = {
+                @NamedSubgraph(name = "universityGroup-subgraph", attributeNodes = {@NamedAttributeNode(value = "students")}),
+                @NamedSubgraph(name = "teachers-subgraph", attributeNodes = {@NamedAttributeNode(value = "students")})
+        }
+)
 public class Student {
 
     @Id

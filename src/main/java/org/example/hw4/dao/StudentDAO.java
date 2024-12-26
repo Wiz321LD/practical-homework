@@ -2,14 +2,10 @@ package org.example.hw4.dao;
 
 import org.example.hw4.connection.HibernateSessionManager;
 import org.example.hw4.model.Student;
-import org.example.hw4.model.UniversityGroup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.graph.RootGraph;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 public class StudentDAO implements SimpleDAO<Integer, Student>{
@@ -40,7 +36,14 @@ public class StudentDAO implements SimpleDAO<Integer, Student>{
         Optional<Student> studentOptional = Optional.empty();
         try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
-            studentOptional = Optional.ofNullable(session.get(Student.class, id));
+
+            RootGraph<?> entityGraph = session.getEntityGraph("graphOfUniversityGroupAndTeachers");
+
+            Map<String, Object> graphProperties = new HashMap<>();
+            graphProperties.put("jakarta.persistence.fetchgraph", entityGraph);
+
+            studentOptional = Optional.ofNullable(session.find(Student.class, id, graphProperties));
+
             session.getTransaction().commit();
         }
         return studentOptional;
@@ -51,7 +54,12 @@ public class StudentDAO implements SimpleDAO<Integer, Student>{
         List<Student> studentList = new ArrayList<>();
         try (Session session = SESSION_FACTORY.openSession()) {
             session.beginTransaction();
-            studentList = session.createQuery("FROM Student", Student.class).getResultList();
+
+            studentList = session.createQuery("FROM Student", Student.class)
+                    .setHint("jakarta.persistence.fetchgraph", session.getEntityGraph("graphOfUniversityGroupAndTeachers"))
+                    .getResultList();
+
+            session.getTransaction().commit();
         }
         return studentList;
     }
