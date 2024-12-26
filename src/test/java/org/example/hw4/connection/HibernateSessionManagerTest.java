@@ -1,7 +1,6 @@
 package org.example.hw4.connection;
 
-import org.example.hw4.model.Student;
-import org.example.hw4.model.Teacher;
+import org.example.hw4.model.*;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 

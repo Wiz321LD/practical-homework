@@ -26,6 +26,9 @@
     <mapping class="org.example.hw4.model.Student"/>
     <mapping class="org.example.hw4.model.Teacher"/>
     <mapping class="org.example.hw4.model.UniversityGroup"/>
+    <mapping class="org.example.hw4.model.Auditorium"/>
+    <mapping class="org.example.hw4.model.FirstFloorAuditorium"/>
+    <mapping class="org.example.hw4.model.SecondFloorAuditorium"/>
 
   </session-factory>
 </hibernate-configuration>

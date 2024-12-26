@@ -20,15 +20,15 @@ public class SelectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        HttpSession session = req.getSession();
-
-        int studentId = Integer.parseInt(req.getParameter("studentId"));
-        Student student = STUDENT_SERVICE.getStudentById(studentId);
-        System.out.println(student);
-
-        session.setAttribute("student", student);
-
-        req.getRequestDispatcher("/WEB-INF/select.jsp").forward(req, resp);
+//        HttpSession session = req.getSession();
+//
+//        int studentId = Integer.parseInt(req.getParameter("studentId"));
+//        Student student = STUDENT_SERVICE.getStudentById(studentId);
+//        System.out.println(student);
+//
+//        session.setAttribute("student", student);
+//
+//        req.getRequestDispatcher("/WEB-INF/select.jsp").forward(req, resp);
 
     }
 
