@@ -13,6 +13,7 @@
     <property name="hibernate.order_updates">true</property>
     <property name="hibernate.order_inserts">true</property>
     <property name="hibernate.generate_statistics">true</property>
+    <property name="hibernate.cache.region_prefix_factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>
 
 
     <!-- Added by org/example/hw4/util/PropertiesUtil.java in HibernateSessionManager -->

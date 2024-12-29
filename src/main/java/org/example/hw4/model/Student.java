@@ -1,8 +1,10 @@
 package org.example.hw4.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.Cache;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +23,7 @@ import java.util.List;
                 @NamedSubgraph(name = "teachers-subgraph", attributeNodes = {@NamedAttributeNode(value = "students")})
         }
 )
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Student {
 
     @Id
@@ -48,6 +51,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id_fk"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id_fk"))
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Teacher> teachers;
 
     @Column(name = "grade")

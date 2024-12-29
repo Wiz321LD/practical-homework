@@ -1,6 +1,8 @@
 package org.example.hw4.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
 
@@ -20,6 +22,7 @@ import java.util.*;
                 })
         }
 )
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Teacher {
 
     @Id
@@ -39,6 +42,7 @@ public class Teacher {
 
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Student> students;
 
 

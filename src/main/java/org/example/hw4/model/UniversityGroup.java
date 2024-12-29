@@ -1,6 +1,8 @@
 package org.example.hw4.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "university_group")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UniversityGroup {
 
     @Id
@@ -18,6 +21,7 @@ public class UniversityGroup {
 
     @OneToMany(mappedBy = "universityGroup", fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Student> students;
 
 
