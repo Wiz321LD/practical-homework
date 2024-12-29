@@ -9,6 +9,10 @@
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
     <property name="hibernate.connection.autocommit">false</property>
+    <property name="hibernate.jdbc.batch_size">10000</property>
+    <property name="hibernate.order_updates">true</property>
+    <property name="hibernate.order_inserts">true</property>
+    <property name="hibernate.generate_statistics">true</property>
 
 
     <!-- Added by org/example/hw4/util/PropertiesUtil.java in HibernateSessionManager -->

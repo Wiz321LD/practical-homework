@@ -24,7 +24,7 @@ import java.util.List;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Generated
     @Column(name = "student_id")
     private int studentId;
@@ -50,15 +50,19 @@ public class Student {
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
     private List<Teacher> teachers;
 
+    @Column(name = "grade")
+    private int grade;
+
 
     public Student(){}
 
-    public Student(String name, String surname, Date birthDate, UniversityGroup universityGroup, List<Teacher> teachers) {
+    public Student(String name, String surname, Date birthDate, UniversityGroup universityGroup, List<Teacher> teachers, int grade) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
         this.universityGroup = universityGroup;
         this.teachers = teachers;
+        this.grade = grade;
     }
 
 
@@ -86,6 +90,10 @@ public class Student {
         return teachers;
     }
 
+    public int getGrade() {
+        return grade;
+    }
+
     public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
@@ -110,6 +118,10 @@ public class Student {
         this.teachers = teachers;
     }
 
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
     public void addTeacher(Teacher teacher){
         if (teachers == null){
             teachers = new ArrayList<>();
@@ -129,6 +141,7 @@ public class Student {
                 ", surname='" + surname + '\'' +
                 ", birthDate=" + birthDate +
                 ", universityGroup=" + universityGroup.getNumber() +
+                ", grade=" + grade +
                 ", teachers=" + teachers.stream().
                     map((x) -> x.getName() + " " + x.getSurname()).toList() +
                 '}';

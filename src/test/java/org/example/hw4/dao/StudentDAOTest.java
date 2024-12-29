@@ -34,4 +34,26 @@ class StudentDAOTest {
         assertDoesNotThrow(() -> System.out.println(students));
     }
 
+    @Test
+    public void testInsert100_000BatchRawsInTable(){
+        STUDENT_DAO.insert100_000BatchRawsInTable();
+    }
+
+    @Test
+    public void testDelete100_000BatchRawsInTable(){
+        STUDENT_DAO.delete100_000BatchRawsInTable();
+    }
+
+    @Test
+    public void testGetStudentWhereGradeMoreThan2000(){
+        Student student = STUDENT_DAO.getStudentWhereGradeMoreThan2000();
+        System.out.println(student);
+    }
+
+    @Test
+    public void testGetStudentsWhereGradeMoreThan2000(){
+        List<Student> students = STUDENT_DAO.getStudentsWhereGradeMoreThan2000();
+        students.forEach(System.out::println);
+    }
+
 }
