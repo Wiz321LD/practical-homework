@@ -1,8 +1,8 @@
-package org.example.hw3.servlet;
+package org.example.hw4.servlet;
 
-import org.example.hw3.model.Student;
-import org.example.hw3.model.UniversityGroup;
-import org.example.hw3.service.StudentService;
+import org.example.hw4.model.Student;
+import org.example.hw4.model.UniversityGroup;
+import org.example.hw4.service.StudentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +19,7 @@ import java.util.Date;
 @WebServlet("/insert")
 public class InsertServlet extends HttpServlet {
 
-    private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
+    private static final StudentService STUDENT_SERVICE = StudentService.getStudentService();
 
 
     //Type: /insert?name=...&surname=...&date=yyyy-MM-dd&number=...
@@ -62,7 +62,7 @@ public class InsertServlet extends HttpServlet {
 
         Student student = (Student) session.getAttribute("student");
 
-        STUDENT_SERVICE.createOneNewStudent(student);
+        STUDENT_SERVICE.create(student);
 
         try(PrintWriter outWriter = resp.getWriter()){
             outWriter.println("OK");

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <session-factory>
+
+    <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+    <property name="hibernate.connection.autocommit">false</property>
+    <property name="hibernate.jdbc.batch_size">10000</property>
+    <property name="hibernate.order_updates">true</property>
+    <property name="hibernate.order_inserts">true</property>
+    <property name="hibernate.generate_statistics">true</property>
+    <property name="hibernate.cache.region_prefix_factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>
+
+
+    <!-- Added by org/example/hw4/util/PropertiesUtil.java in HibernateSessionManager -->
+<!--    <property name="hibernate.connection.username"></property>  -->
+<!--    <property name="hibernate.connection.password"></property>  -->
+<!--    <property name="hibernate.connection.url"></property> -->
+<!--    <property name="hibernate.connection.driver_class"></property>  -->
+<!--    <property name="hibernate.dialect"></property>  -->
+
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+
+    <!-- Entity mapping -->
+    <mapping class="org.example.hw4.model.Student"/>
+    <mapping class="org.example.hw4.model.Teacher"/>
+    <mapping class="org.example.hw4.model.UniversityGroup"/>
+    <mapping class="org.example.hw4.model.Auditorium"/>
+    <mapping class="org.example.hw4.model.FirstFloorAuditorium"/>
+    <mapping class="org.example.hw4.model.SecondFloorAuditorium"/>
+
+  </session-factory>
+</hibernate-configuration>

@@ -1,7 +1,7 @@
-package org.example.hw3.servlet;
+package org.example.hw4.servlet;
 
-import org.example.hw3.model.Student;
-import org.example.hw3.service.StudentService;
+import org.example.hw4.model.Student;
+import org.example.hw4.service.StudentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet("/select")
 public class SelectServlet extends HttpServlet {
 
-    private static final StudentService STUDENT_SERVICE = StudentService.getInstance();
+    private static final StudentService STUDENT_SERVICE = StudentService.getStudentService();
 
 
     @Override
@@ -23,7 +23,7 @@ public class SelectServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         int studentId = Integer.parseInt(req.getParameter("studentId"));
-        Student student = STUDENT_SERVICE.getStudentById(studentId);
+        Student student = STUDENT_SERVICE.findById(studentId);
         System.out.println(student);
 
         session.setAttribute("student", student);
