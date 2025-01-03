@@ -1,4 +1,4 @@
-<%@ page import="org.example.hw4.model.Student" %>
+<%@ page import="org.example.hw5.model.Student" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>

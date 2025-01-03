@@ -1,0 +1,80 @@
+package org.example.hw5.dao;
+
+import org.example.hw5.model.Teacher;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.graph.RootGraph;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+@Component("teacherDAO")
+@Scope(BeanDefinition.SCOPE_SINGLETON)
+@Transactional
+public class TeacherDAO implements SimpleDAO<Integer, Teacher>{
+
+
+    private final SessionFactory SESSION_FACTORY;
+
+
+    @Autowired
+    private TeacherDAO(SessionFactory SESSION_FACTORY){
+        this.SESSION_FACTORY = SESSION_FACTORY;
+    }
+
+
+    @Override
+    public Teacher save(Teacher element) {
+        Session session = SESSION_FACTORY.getCurrentSession();
+        session.persist(element);
+        return element;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<Teacher> findById(Integer id) {
+
+        Session session = SESSION_FACTORY.getCurrentSession();
+
+        RootGraph<?> entityGraph = session.getEntityGraph("graphOfUniversityGroupAndTeachers");
+
+        Map<String, Object> graphProperties = new HashMap<>();
+        graphProperties.put("jakarta.persistence.fetchgraph", entityGraph);
+
+        return Optional.ofNullable(session.find(Teacher.class, id, graphProperties));
+
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Teacher> findAll() {
+        Session session = SESSION_FACTORY.getCurrentSession();
+        return session.createQuery("FROM Teacher", Teacher.class)
+                .setHint("jakarta.persistence.fetchgraph", session.getEntityGraph("graphOfUniversityGroupAndTeachers"))
+                .getResultList();
+    }
+
+    @Override
+    public void update(Teacher element) {
+
+        Session session = SESSION_FACTORY.getCurrentSession();
+
+        if (Objects.isNull(session.find(Teacher.class, element.getTeacherId()))){
+            session.persist(element);
+        } else {
+            session.merge(element);
+        }
+
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Session session = SESSION_FACTORY.getCurrentSession();
+        session.remove(session.get(Teacher.class, id));
+    }
+
+}
