@@ -6,14 +6,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Component("universityGroupDAO")
+@Repository("universityGroupDAO")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-@Transactional
 public class UniversityGroupDAO implements SimpleDAO<Integer, UniversityGroup>{
 
 
@@ -33,14 +32,12 @@ public class UniversityGroupDAO implements SimpleDAO<Integer, UniversityGroup>{
         return element;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<UniversityGroup> findById(Integer id) {
         Session session = SESSION_FACTORY.getCurrentSession();
         return Optional.ofNullable(session.get(UniversityGroup.class, id));
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<UniversityGroup> findAll() {
         Session session = SESSION_FACTORY.getCurrentSession();

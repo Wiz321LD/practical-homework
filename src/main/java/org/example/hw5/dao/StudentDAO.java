@@ -9,14 +9,14 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Component("studentDAO")
+@Repository("studentDAO")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-@Transactional
 public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInsertDeleteDAO<Integer, Student> {
 
 
@@ -37,28 +37,39 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
         return element;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<Student> findById(Integer id) {
 
         Session session = SESSION_FACTORY.getCurrentSession();
+        session.beginTransaction();
 
-        RootGraph<?> entityGraph = session.getEntityGraph("graphOfUniversityGroupAndTeachers");
-
-        Map<String, Object> graphProperties = new HashMap<>();
-        graphProperties.put("jakarta.persistence.fetchgraph", entityGraph);
-
-        return Optional.ofNullable(session.find(Student.class, id, graphProperties));
+        return session.createQuery(
+                """
+                   SELECT s FROM Student s
+                       JOIN FETCH s.universityGroup
+                       JOIN FETCH s.teachers
+                       WHERE s.studentId =:studentId
+                   """, Student.class
+        )
+                .setParameter("studentId", id)
+                .uniqueResultOptional();
 
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Student> findAll() {
         Session session = SESSION_FACTORY.getCurrentSession();
-        return session.createQuery("FROM Student", Student.class)
-                .setHint("jakarta.persistence.fetchgraph", session.getEntityGraph("graphOfUniversityGroupAndTeachers"))
-                .getResultList();
+        session.beginTransaction();
+        Query<Student> selectQuery = session.createQuery(
+                """
+                  SELECT s FROM Student s
+                      JOIN FETCH s.universityGroup
+                      JOIN FETCH s.teachers
+                      ORDER BY s.studentId
+                  """, Student.class
+        );
+
+        return selectQuery.getResultList();
     }
 
     @Override
@@ -80,7 +91,6 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
         session.remove(session.get(Student.class, id));
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Student findStudentAndTeachers(Integer studentId){
         Session session = SESSION_FACTORY.getCurrentSession();
@@ -122,7 +132,6 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
 
     }
 
-    @Transactional(readOnly = true)
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
     public Student getStudentWhereGradeMoreThan2000() {
@@ -143,7 +152,6 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
 
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Student> getStudentsWhereGradeMoreThan2000() {
 

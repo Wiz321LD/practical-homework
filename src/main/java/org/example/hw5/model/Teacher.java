@@ -1,8 +1,7 @@
 package org.example.hw5.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
 
@@ -10,19 +9,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "teacher")
-@NamedEntityGraph(
-        name = "graphOfStudents",
-        attributeNodes = {
-                @NamedAttributeNode(value = "students", subgraph = "students-subgraph")
-        },
-        subgraphs = {
-                @NamedSubgraph(name = "students-subgraph", attributeNodes = {
-                        @NamedAttributeNode(value = "universityGroup"),
-                        @NamedAttributeNode(value = "teachers")
-                })
-        }
-)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Teacher {
 
     @Id
@@ -42,7 +28,7 @@ public class Teacher {
 
     @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonBackReference
     private List<Student> students;
 
 

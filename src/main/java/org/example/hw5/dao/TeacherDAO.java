@@ -7,14 +7,13 @@ import org.hibernate.graph.RootGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Component("teacherDAO")
+@Repository("teacherDAO")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-@Transactional
 public class TeacherDAO implements SimpleDAO<Integer, Teacher>{
 
 
@@ -34,27 +33,19 @@ public class TeacherDAO implements SimpleDAO<Integer, Teacher>{
         return element;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<Teacher> findById(Integer id) {
 
         Session session = SESSION_FACTORY.getCurrentSession();
 
-        RootGraph<?> entityGraph = session.getEntityGraph("graphOfUniversityGroupAndTeachers");
-
-        Map<String, Object> graphProperties = new HashMap<>();
-        graphProperties.put("jakarta.persistence.fetchgraph", entityGraph);
-
-        return Optional.ofNullable(session.find(Teacher.class, id, graphProperties));
+        return Optional.ofNullable(session.find(Teacher.class, id));
 
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Teacher> findAll() {
         Session session = SESSION_FACTORY.getCurrentSession();
         return session.createQuery("FROM Teacher", Teacher.class)
-                .setHint("jakarta.persistence.fetchgraph", session.getEntityGraph("graphOfUniversityGroupAndTeachers"))
                 .getResultList();
     }
 

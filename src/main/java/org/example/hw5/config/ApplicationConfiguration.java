@@ -6,13 +6,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -20,7 +25,8 @@ import java.util.Properties;
 @PropertySource("classpath:applicationProperties.properties")
 @ComponentScan(basePackages = "org.example")
 @EnableTransactionManagement
-public class ApplicationConfiguration {
+@EnableWebMvc
+public class ApplicationConfiguration implements WebMvcConfigurer {
 
 
     private final Environment ENVIRONMENT;
@@ -50,11 +56,7 @@ public class ApplicationConfiguration {
         properties.put("hibernate.dialect", ENVIRONMENT.getProperty("hibernate.dialect"));
         properties.put("show_sql", ENVIRONMENT.getProperty("show_sql"));
         properties.put("format_sql", ENVIRONMENT.getProperty("format_sql"));
-        properties.put("hibernate.jdbc.batch_size", ENVIRONMENT.getProperty("hibernate.jdbc.batch_size"));
-        properties.put("hibernate.order_updates", ENVIRONMENT.getProperty("hibernate.order_updates"));
-        properties.put("hibernate.order_inserts", ENVIRONMENT.getProperty("hibernate.order_inserts"));
-        properties.put("hibernate.generate_statistics", ENVIRONMENT.getProperty("hibernate.generate_statistics"));
-        properties.put("hibernate.cache.region_prefix_factory_class", ENVIRONMENT.getProperty("hibernate.cache.region_prefix_factory_class"));
+        properties.put("hibernate.current_session_context_class", ENVIRONMENT.getProperty("hibernate.current_session_context_class"));
 
         return properties;
     }
@@ -76,6 +78,11 @@ public class ApplicationConfiguration {
         hibernateTransactionManager.setSessionFactory(sessionFactoryBean().getObject());
 
         return hibernateTransactionManager;
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MappingJackson2HttpMessageConverter());
     }
 
 }

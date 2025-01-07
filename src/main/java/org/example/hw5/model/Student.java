@@ -1,10 +1,9 @@
 package org.example.hw5.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.Cache;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,23 +11,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
-@NamedEntityGraph(
-        name = "graphOfUniversityGroupAndTeachers",
-        attributeNodes = {
-                @NamedAttributeNode(value = "universityGroup", subgraph = "universityGroup-subgraph"),
-                @NamedAttributeNode(value = "teachers", subgraph = "teachers-subgraph")
-        },
-        subgraphs = {
-                @NamedSubgraph(name = "universityGroup-subgraph", attributeNodes = {@NamedAttributeNode(value = "students")}),
-                @NamedSubgraph(name = "teachers-subgraph", attributeNodes = {@NamedAttributeNode(value = "students")})
-        }
-)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Generated
+    @Generated()
     @Column(name = "student_id")
     private int studentId;
 
@@ -43,6 +30,7 @@ public class Student {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_number_fk")
+    @JsonManagedReference
     private UniversityGroup universityGroup;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -50,8 +38,8 @@ public class Student {
             name = "student_teacher",
             joinColumns = @JoinColumn(name = "student_id_fk"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id_fk"))
+    @JsonManagedReference
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Teacher> teachers;
 
     @Column(name = "grade")

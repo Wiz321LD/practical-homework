@@ -6,16 +6,15 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component("firstFloorAuditoriumDAO")
+@Repository("firstFloorAuditoriumDAO")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-@Transactional
 public class FirstFloorAuditoriumDAO implements SimpleDAO<Integer, FirstFloorAuditorium> {
 
 
@@ -35,14 +34,12 @@ public class FirstFloorAuditoriumDAO implements SimpleDAO<Integer, FirstFloorAud
         return element;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<FirstFloorAuditorium> findById(Integer id) {
         Session session = SESSION_FACTORY.getCurrentSession();
         return Optional.ofNullable(session.get(FirstFloorAuditorium.class, id));
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<FirstFloorAuditorium> findAll() {
         Session session = SESSION_FACTORY.getCurrentSession();

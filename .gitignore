@@ -36,7 +36,8 @@ buildNumber.properties
 .mvn/timing.properties
 
 # Properties Files #
-postgresqlData.properties
+applicationProperties.properties
 
 # Meta info #
 META-INF
+sqlCode.sql

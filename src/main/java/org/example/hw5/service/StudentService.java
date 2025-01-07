@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service("studentService")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
+@Transactional
 public class StudentService implements SimpleService<Integer, Student> {
 
 
@@ -29,11 +31,13 @@ public class StudentService implements SimpleService<Integer, Student> {
         return STUDENT_DAO.save(element);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Student findById(Integer id) {
-        return STUDENT_DAO.findById(id).orElse(null);
+        return STUDENT_DAO.findById(id).get();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Student> findAll() {
         return STUDENT_DAO.findAll();
