@@ -2,6 +2,8 @@ package org.example.hw5.controller;
 
 import org.example.hw5.model.Student;
 import org.example.hw5.service.SimpleService;
+import org.example.hw5.util.StudentErrorResponse;
+import org.example.hw5.util.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -69,6 +71,13 @@ public class StudentController {
         STUDENT_SERVICE.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @ExceptionHandler
+    private ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException e){
+        StudentErrorResponse errorResponse = new StudentErrorResponse("Student not found!");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }

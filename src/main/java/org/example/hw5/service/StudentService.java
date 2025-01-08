@@ -2,6 +2,7 @@ package org.example.hw5.service;
 
 import org.example.hw5.dao.SimpleDAO;
 import org.example.hw5.model.Student;
+import org.example.hw5.util.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -35,7 +36,7 @@ public class StudentService implements SimpleService<Integer, Student> {
     @Transactional(readOnly = true)
     @Override
     public Student findById(Integer id) {
-        return STUDENT_DAO.findById(id).get();
+        return STUDENT_DAO.findById(id).orElseThrow(StudentNotFoundException :: new);
     }
 
     @Transactional(readOnly = true)
