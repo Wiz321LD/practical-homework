@@ -36,7 +36,10 @@ buildNumber.properties
 .mvn/timing.properties
 
 # Properties Files #
-postgresqlData.properties
+src/main/resources/applicationProperties.properties
 
 # Meta info #
 META-INF
+
+# Txt files #
+src/main/resources/jsonExample.txt
