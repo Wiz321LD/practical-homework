@@ -4,37 +4,32 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "second_floor_auditorium")
 @PrimaryKeyJoinColumn(name = "room_number")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SecondFloorAuditorium extends Auditorium {
 
     @Column(name = "type")
     private String type;
 
 
-    public SecondFloorAuditorium() {
-    }
-
-    public SecondFloorAuditorium(String type) {
-        this.type = type;
-    }
-
+    @SuppressWarnings("unused")
     public SecondFloorAuditorium(int roomNumber, String floor, UniversityGroup universityGroup, String type) {
         super(roomNumber, floor, universityGroup);
         this.type = type;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public boolean equals(Object object) {

@@ -1,7 +1,8 @@
 package org.example.hw5.service;
 
-import org.example.hw5.dao.SimpleDAO;
 import org.example.hw5.model.UniversityGroup;
+import org.example.hw5.repository.SimpleRepository;
+import org.example.hw5.repository.UniversityGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -17,40 +18,40 @@ import java.util.List;
 public class UniversityGroupService implements SimpleService<Integer, UniversityGroup> {
 
 
-    private final SimpleDAO<Integer, UniversityGroup> GROUP_DAO;
+    private final UniversityGroupRepository GROUP_REPO;
 
 
     @Autowired
-    private UniversityGroupService(@Qualifier("universityGroupDAO") SimpleDAO<Integer, UniversityGroup> groupDao){
-        GROUP_DAO = groupDao;
+    public UniversityGroupService(UniversityGroupRepository groupRepo){
+        GROUP_REPO = groupRepo;
     }
 
 
     @Override
     public UniversityGroup create(UniversityGroup element) {
-        return GROUP_DAO.save(element);
+        return GROUP_REPO.save(element);
     }
 
     @Transactional(readOnly = true)
     @Override
     public UniversityGroup findById(Integer id) {
-        return GROUP_DAO.findById(id).orElse(null);
+        return GROUP_REPO.findById(id).orElse(null);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<UniversityGroup> findAll() {
-        return GROUP_DAO.findAll();
+        return GROUP_REPO.findAll();
     }
 
     @Override
     public void update(UniversityGroup element) {
-        GROUP_DAO.update(element);
+        GROUP_REPO.save(element);
     }
 
     @Override
     public void delete(Integer id) {
-        GROUP_DAO.delete(id);
+        GROUP_REPO.deleteById(id);
     }
 
 }

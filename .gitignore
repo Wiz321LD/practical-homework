@@ -35,8 +35,8 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
-# Properties Files #
-src/main/resources/applicationProperties.properties
+# Yaml Files #
+src/main/resources/application.yaml
 
 # Meta info #
 META-INF

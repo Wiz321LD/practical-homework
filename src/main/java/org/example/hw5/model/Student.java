@@ -1,8 +1,10 @@
 package org.example.hw5.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -14,6 +16,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
+@Getter
+@Setter
+@NoArgsConstructor
+@SuppressWarnings("ALL")
 public class Student {
 
     @Id
@@ -51,8 +57,6 @@ public class Student {
     private int grade;
 
 
-    public Student(){}
-
     public Student(String name, String surname, Date birthDate, UniversityGroup universityGroup, List<Teacher> teachers, int grade) {
         this.name = name;
         this.surname = surname;
@@ -63,62 +67,7 @@ public class Student {
     }
 
 
-    public int getStudentId() {
-        return studentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public UniversityGroup getUniversityGroup() {
-        return universityGroup;
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setUniversityGroup(UniversityGroup universityGroup) {
-        this.universityGroup = universityGroup;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
+    @SuppressWarnings("unused")
     public void addTeacher(Teacher teacher){
         if (teachers == null){
             teachers = new ArrayList<>();

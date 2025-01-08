@@ -1,7 +1,8 @@
 package org.example.hw5.service;
 
-import org.example.hw5.dao.SimpleDAO;
 import org.example.hw5.model.Student;
+import org.example.hw5.repository.SimpleRepository;
+import org.example.hw5.repository.StudentRepository;
 import org.example.hw5.util.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,41 +19,40 @@ import java.util.List;
 public class StudentService implements SimpleService<Integer, Student> {
 
 
-    private final SimpleDAO<Integer, Student> STUDENT_DAO;
+    private final StudentRepository STUDENT_REPO;
 
 
     @Autowired
-    private StudentService(@Qualifier("studentDAO") SimpleDAO<Integer, Student> studentDao) {
-        STUDENT_DAO = studentDao;
+    public StudentService(StudentRepository studentRepo) {
+        STUDENT_REPO = studentRepo;
     }
 
 
     @Override
     public Student create(Student element) {
-        return STUDENT_DAO.save(element);
+        return STUDENT_REPO.save(element);
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Transactional(readOnly = true)
     @Override
     public Student findById(Integer id) {
-        return STUDENT_DAO.findById(id).orElseThrow(StudentNotFoundException :: new);
+        return STUDENT_REPO.findById(id).orElseThrow(() -> new StudentNotFoundException("Student not found!"));
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Student> findAll() {
-        return STUDENT_DAO.findAll();
+        return STUDENT_REPO.findAll();
     }
 
     @Override
     public void update(Student element) {
-        STUDENT_DAO.update(element);
+        STUDENT_REPO.save(element);
     }
 
     @Override
     public void delete(Integer id) {
-        STUDENT_DAO.delete(id);
+        STUDENT_REPO.deleteById(id);
     }
 
 }

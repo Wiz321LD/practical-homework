@@ -4,37 +4,32 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "first_floor_auditorium")
 @PrimaryKeyJoinColumn(name = "room_number")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FirstFloorAuditorium extends Auditorium {
 
     @Column(name = "is_storage_present")
     private boolean storage_presence;
 
 
-    public FirstFloorAuditorium() {
-    }
-
-    public FirstFloorAuditorium(boolean storage_presence) {
-        this.storage_presence = storage_presence;
-    }
-
+    @SuppressWarnings("unused")
     public FirstFloorAuditorium(int roomNumber, String floor, UniversityGroup universityGroup, boolean storage_presence) {
         super(roomNumber, floor, universityGroup);
         this.storage_presence = storage_presence;
     }
 
-    public boolean isStorage_presence() {
-        return storage_presence;
-    }
-
-    public void setStorage_presence(boolean storage_presence) {
-        this.storage_presence = storage_presence;
-    }
 
     @Override
     public boolean equals(Object object) {

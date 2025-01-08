@@ -2,6 +2,9 @@ package org.example.hw5.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -11,6 +14,10 @@ import java.util.*;
 
 @Entity
 @Table(name = "teacher")
+@Getter
+@Setter
+@NoArgsConstructor
+@SuppressWarnings("unused")
 public class Teacher {
 
     @Id
@@ -35,8 +42,6 @@ public class Teacher {
     private List<Student> students;
 
 
-    public Teacher(){}
-
     public Teacher(String name, String surname, Date birthDate, List<Student> students) {
         this.name = name;
         this.surname = surname;
@@ -44,46 +49,6 @@ public class Teacher {
         this.students = students;
     }
 
-
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
 
     public void addStudent(Student student) {
         if (students == null){

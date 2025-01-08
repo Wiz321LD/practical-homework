@@ -1,22 +1,14 @@
 package org.example.hw5.util;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class StudentErrorResponse {
 
-
     private String errorMessage;
-
-
-    public StudentErrorResponse(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
 
 }

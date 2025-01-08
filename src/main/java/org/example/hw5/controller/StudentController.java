@@ -56,11 +56,8 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(
-            @PathVariable(name = "id") int id,
-            @RequestBody Student student
-    ){
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody Student student){
         STUDENT_SERVICE.update(student);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -76,7 +73,7 @@ public class StudentController {
 
     @ExceptionHandler
     private ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException e){
-        StudentErrorResponse errorResponse = new StudentErrorResponse("Student not found!");
+        StudentErrorResponse errorResponse = new StudentErrorResponse(e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 

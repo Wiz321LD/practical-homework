@@ -2,6 +2,10 @@ package org.example.hw5.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -11,6 +15,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "university_group")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UniversityGroup {
 
     @Id
@@ -24,26 +32,7 @@ public class UniversityGroup {
     private List<Student> students;
 
 
-    public UniversityGroup(){}
-
-    public UniversityGroup(int number, List<Student> students) {
-        this.number = number;
-        this.students = students;
-    }
-
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public void setStudents(List<Student> students) {this.students = students;}
-
-    public int getNumber() {
-        return this.number;
-    }
-
-    public List<Student> getStudents() {return this.students;}
-
+    @SuppressWarnings("unused")
     public void addStudent(Student student) {
         if (this.students == null) {
             this.students = new ArrayList<>();

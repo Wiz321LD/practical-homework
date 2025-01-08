@@ -1,7 +1,8 @@
 package org.example.hw5.service;
 
-import org.example.hw5.dao.SimpleDAO;
 import org.example.hw5.model.SecondFloorAuditorium;
+import org.example.hw5.repository.SecondFloorAuditoriumRepository;
+import org.example.hw5.repository.SimpleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -17,40 +18,40 @@ import java.util.List;
 public class SecondFloorAuditoriumService implements SimpleService<Integer, SecondFloorAuditorium> {
 
 
-    private final SimpleDAO<Integer, SecondFloorAuditorium> S_F_AUD_DAO;
+    private final SecondFloorAuditoriumRepository S_F_AUD_REPO;
 
 
     @Autowired
-    private SecondFloorAuditoriumService(@Qualifier("secondFloorAuditoriumDAO") SimpleDAO<Integer, SecondFloorAuditorium> sFAudDao) {
-        S_F_AUD_DAO = sFAudDao;
+    public SecondFloorAuditoriumService(SecondFloorAuditoriumRepository sFAudRepo) {
+        S_F_AUD_REPO = sFAudRepo;
     }
 
 
     @Override
     public SecondFloorAuditorium create(SecondFloorAuditorium element) {
-        return S_F_AUD_DAO.save(element);
+        return S_F_AUD_REPO.save(element);
     }
 
     @Transactional(readOnly = true)
     @Override
     public SecondFloorAuditorium findById(Integer id) {
-        return S_F_AUD_DAO.findById(id).orElse(null);
+        return S_F_AUD_REPO.findById(id).orElse(null);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<SecondFloorAuditorium> findAll() {
-        return S_F_AUD_DAO.findAll();
+        return S_F_AUD_REPO.findAll();
     }
 
     @Override
     public void update(SecondFloorAuditorium element) {
-        S_F_AUD_DAO.update(element);
+        S_F_AUD_REPO.save(element);
     }
 
     @Override
     public void delete(Integer id) {
-        S_F_AUD_DAO.delete(id);
+        S_F_AUD_REPO.deleteById(id);
     }
 
 }
