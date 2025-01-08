@@ -36,8 +36,10 @@ buildNumber.properties
 .mvn/timing.properties
 
 # Properties Files #
-applicationProperties.properties
+src/main/resources/applicationProperties.properties
 
 # Meta info #
 META-INF
-sqlCode.sql
+
+# Txt files #
+src/main/resources/jsonExample.txt

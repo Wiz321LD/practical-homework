@@ -1,5 +1,6 @@
 package org.example.hw5.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -56,7 +57,6 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         properties.put("hibernate.dialect", ENVIRONMENT.getProperty("hibernate.dialect"));
         properties.put("show_sql", ENVIRONMENT.getProperty("show_sql"));
         properties.put("format_sql", ENVIRONMENT.getProperty("format_sql"));
-        properties.put("hibernate.current_session_context_class", ENVIRONMENT.getProperty("hibernate.current_session_context_class"));
 
         return properties;
     }

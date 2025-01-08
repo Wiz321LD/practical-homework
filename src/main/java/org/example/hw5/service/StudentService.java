@@ -31,6 +31,7 @@ public class StudentService implements SimpleService<Integer, Student> {
         return STUDENT_DAO.save(element);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Transactional(readOnly = true)
     @Override
     public Student findById(Integer id) {

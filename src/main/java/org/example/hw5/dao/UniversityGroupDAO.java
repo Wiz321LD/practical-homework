@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -35,13 +34,22 @@ public class UniversityGroupDAO implements SimpleDAO<Integer, UniversityGroup>{
     @Override
     public Optional<UniversityGroup> findById(Integer id) {
         Session session = SESSION_FACTORY.getCurrentSession();
-        return Optional.ofNullable(session.get(UniversityGroup.class, id));
+        return session.createQuery(
+                """
+                   SELECT ug FROM UniversityGroup ug
+                       JOIN FETCH ug.students
+                       WHERE ug.number =: numId
+                   """, UniversityGroup.class
+        )
+                .setParameter("numId", id)
+                .uniqueResultOptional();
     }
 
     @Override
     public List<UniversityGroup> findAll() {
         Session session = SESSION_FACTORY.getCurrentSession();
-        return session.createQuery("FROM UniversityGroup", UniversityGroup.class).getResultList();
+        return session.createQuery("FROM UniversityGroup ug JOIN FETCH ug.students", UniversityGroup.class)
+                .getResultList();
     }
 
     @Override

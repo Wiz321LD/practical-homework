@@ -3,12 +3,10 @@ package org.example.hw5.dao;
 import org.example.hw5.model.Teacher;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.graph.RootGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -38,14 +36,22 @@ public class TeacherDAO implements SimpleDAO<Integer, Teacher>{
 
         Session session = SESSION_FACTORY.getCurrentSession();
 
-        return Optional.ofNullable(session.find(Teacher.class, id));
+        return session.createQuery(
+                """
+                   SELECT t FROM Teacher t
+                       JOIN FETCH t.students
+                       WHERE t.teacherId =: teachId
+                   """, Teacher.class
+        )
+                .setParameter("teachId", id)
+                .uniqueResultOptional();
 
     }
 
     @Override
     public List<Teacher> findAll() {
         Session session = SESSION_FACTORY.getCurrentSession();
-        return session.createQuery("FROM Teacher", Teacher.class)
+        return session.createQuery("FROM Teacher t JOIN FETCH t.students", Teacher.class)
                 .getResultList();
     }
 

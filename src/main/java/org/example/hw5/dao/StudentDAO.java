@@ -4,14 +4,11 @@ import org.example.hw5.model.Student;
 import org.example.hw5.model.UniversityGroup;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.graph.RootGraph;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -41,7 +38,6 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
     public Optional<Student> findById(Integer id) {
 
         Session session = SESSION_FACTORY.getCurrentSession();
-        session.beginTransaction();
 
         return session.createQuery(
                 """
@@ -58,8 +54,9 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
 
     @Override
     public List<Student> findAll() {
+
         Session session = SESSION_FACTORY.getCurrentSession();
-        session.beginTransaction();
+
         Query<Student> selectQuery = session.createQuery(
                 """
                   SELECT s FROM Student s
@@ -70,6 +67,7 @@ public class StudentDAO implements SimpleDAO<Integer, Student>, StudentHardInser
         );
 
         return selectQuery.getResultList();
+
     }
 
     @Override

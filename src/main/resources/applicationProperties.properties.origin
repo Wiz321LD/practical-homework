@@ -13,4 +13,4 @@ format_sql=
 #hibernate.order_inserts=
 #hibernate.generate_statistics=
 #hibernate.cache.region_prefix_factory_class=
-hibernate.current_session_context_class=
+#hibernate.current_session_context_class=

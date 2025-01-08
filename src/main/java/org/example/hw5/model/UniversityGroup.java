@@ -1,8 +1,10 @@
 package org.example.hw5.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,9 @@ public class UniversityGroup {
     private int number;
 
     @OneToMany(mappedBy = "universityGroup", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
-    @JsonBackReference
+    @JsonIgnore
     private List<Student> students;
 
 

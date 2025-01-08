@@ -1,8 +1,11 @@
 package org.example.hw5.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Generated;
 
 import java.util.ArrayList;
@@ -29,17 +32,19 @@ public class Student {
     private Date birthDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "group_number_fk")
-    @JsonManagedReference
+    @JsonIgnore
     private UniversityGroup universityGroup;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     @JoinTable(
             name = "student_teacher",
             joinColumns = @JoinColumn(name = "student_id_fk"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id_fk"))
-    @JsonManagedReference
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    @JsonIgnore
     private List<Teacher> teachers;
 
     @Column(name = "grade")
