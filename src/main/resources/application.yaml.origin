@@ -1,0 +1,21 @@
+#Application default properties
+spring:
+  application:
+    name: ???
+
+  #Datasource configuration
+  datasource:
+    driver-class-name: ???
+    url: ???
+    username: ???
+    password: ???
+
+  #Hibernate configuration
+  jpa:
+    properties:
+      hibernate:
+        dialect: ???
+        show_sql: ???
+        format_sql: ???
+    hibernate:
+      ddl-auto: ???
